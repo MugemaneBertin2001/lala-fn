@@ -46,7 +46,8 @@ const sampleProperties: Property[] = [
     baths: 3,
     guests: 8,
     amenities: ["Beach Access", "Pool", "WiFi", "Kitchen"],
-    imagePath: "/api/placeholder/800/600",
+    imagePath:
+      "https://res.cloudinary.com/dxfhf2lml/image/upload/v1740062099/961e25b6-e709-463b-9ee3-f41f8e39a2d0_qn37vk.jpg",
   },
   {
     id: 2,
@@ -61,7 +62,8 @@ const sampleProperties: Property[] = [
     baths: 2,
     guests: 4,
     amenities: ["City View", "Gym", "WiFi", "Workspace"],
-    imagePath: "/api/placeholder/800/600",
+    imagePath:
+      "https://res.cloudinary.com/dxfhf2lml/image/upload/v1740062099/5988b627-40d5-47c7-b9b4-31fd63ed3143_koxd7j.jpg",
   },
   {
     id: 3,
@@ -76,7 +78,8 @@ const sampleProperties: Property[] = [
     baths: 2,
     guests: 6,
     amenities: ["Fireplace", "Hot Tub", "WiFi", "Parking"],
-    imagePath: "/api/placeholder/800/600",
+    imagePath:
+      "https://res.cloudinary.com/dxfhf2lml/image/upload/v1740062057/d0faedf7-c49a-4a0b-adf1-ce9fa335c961_yb2psu.avif",
   },
 ];
 
@@ -156,13 +159,14 @@ const HomePage = () => {
               key={property.id}
               className="relative overflow-hidden transition-all border border-blue-600 shadow-lg group rounded-xl bg-blue-800/50 hover:shadow-xl"
             >
-              <div className="overflow-hidden aspect-h-2 aspect-w-3">
+              <div className="relative h-[200px] md:h-[240px] lg:h-[280px] w-full overflow-hidden rounded-t-xl">
                 <Image
                   src={property.imagePath}
                   alt={property.title}
-                  width={800}
-                  height={600}
-                  className="object-cover object-center w-full h-full transition-transform duration-300 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  priority
                 />
               </div>
 

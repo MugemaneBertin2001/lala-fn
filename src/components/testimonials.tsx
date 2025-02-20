@@ -18,7 +18,8 @@ const testimonials: Testimonial[] = [
     id: 1,
     name: "Sarah Johnson",
     role: "Travel Enthusiast",
-    image: "/api/placeholder/100/100",
+    image:
+      "https://res.cloudinary.com/dxfhf2lml/image/upload/v1740063142/473146084_924820043116550_6232122921025454874_n_ol9wux.jpg",
     content:
       "The most amazing vacation rental experience I've ever had. The property exceeded all expectations and the host was incredibly accommodating.",
     rating: 5,
@@ -28,7 +29,8 @@ const testimonials: Testimonial[] = [
     id: 2,
     name: "Michael Chen",
     role: "Business Traveler",
-    image: "/api/placeholder/100/100",
+    image:
+      "https://res.cloudinary.com/dxfhf2lml/image/upload/v1740063230/988_c840de.jpg",
     content:
       "Perfect for my business trip. The workspace and amenities were exactly what I needed. Will definitely book again!",
     rating: 5,
@@ -38,7 +40,8 @@ const testimonials: Testimonial[] = [
     id: 3,
     name: "Emma Davis",
     role: "Family Vacation",
-    image: "/api/placeholder/100/100",
+    image:
+      "https://res.cloudinary.com/dxfhf2lml/image/upload/v1740063424/Emma-Davis-Headshot-Website_sh9xk9.jpg",
     content:
       "Our family had an incredible time. The property was spacious, clean, and had everything we needed for a comfortable stay.",
     rating: 5,
