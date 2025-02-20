@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Menu, X, Home, User, LogIn } from "lucide-react";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,24 +24,24 @@ const Navbar = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden md:ml-6 md:flex md:space-x-8">
-              <a
+              <Link
                 href="/"
                 className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2 border-indigo-500"
               >
                 Home
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/coming-soon"
                 className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900 hover:border-gray-300"
               >
                 Properties
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/coming-soon"
                 className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900 hover:border-gray-300"
               >
                 My Bookings
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -76,24 +77,24 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden">
           <div className="pt-2 pb-3 space-y-1">
-            <a
+            <Link
               href="/"
               className="block pl-3 pr-4 py-2 border-l-4 border-indigo-500 text-base font-medium text-indigo-700 bg-indigo-50"
             >
               Home
-            </a>
-            <a
+            </Link>
+            <Link
               href="/properties"
               className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300"
             >
               Properties
-            </a>
-            <a
+            </Link>
+            <Link
               href="/bookings"
               className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300"
             >
               My Bookings
-            </a>
+            </Link>
           </div>
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="space-y-1">

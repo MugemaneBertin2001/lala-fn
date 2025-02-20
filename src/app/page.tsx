@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { Search } from "lucide-react";
 import Navbar from "@/components/navbar";
+import Image from "next/image";
+
 
 const Homepage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -58,10 +60,12 @@ const Homepage = () => {
               className="group relative bg-white rounded-lg shadow-lg overflow-hidden"
             >
               <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-64">
-                <img
-                  src={`/api/placeholder/400/300`}
-                  alt="Property"
-                  className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                <Image
+                  src="/your-image-path"
+                  alt="Your alt text"
+                  width={64}
+                  height={64}
+                  className="w-12 h-12 rounded-full"
                 />
               </div>
               <div className="p-4">
