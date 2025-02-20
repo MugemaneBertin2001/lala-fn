@@ -1,44 +1,133 @@
 "use client";
-import React, { useState } from "react";
-import { Search } from "lucide-react";
+
+import { useState } from "react";
+import {
+  Search,
+  Star,
+  MapPin,
+  Users,
+  Bath,
+  Home,
+  Wifi,
+  Coffee,
+} from "lucide-react";
 import Navbar from "@/components/navbar";
 import Image from "next/image";
+import Link from "next/link";
+import { Testimonials } from "@/components/testimonials";
+import { Footer } from "@/components/footer";
 
+interface Property {
+  id: number;
+  title: string;
+  location: string;
+  description: string;
+  price: number;
+  rating: number;
+  reviews: number;
+  beds: number;
+  baths: number;
+  guests: number;
+  amenities: string[];
+  imagePath: string;
+}
 
-const Homepage = () => {
+const sampleProperties: Property[] = [
+  {
+    id: 1,
+    title: "Luxury Beachfront Villa",
+    location: "Malibu, California",
+    description:
+      "Stunning oceanfront villa with private beach access and panoramic views",
+    price: 599,
+    rating: 4.9,
+    reviews: 128,
+    beds: 4,
+    baths: 3,
+    guests: 8,
+    amenities: ["Beach Access", "Pool", "WiFi", "Kitchen"],
+    imagePath: "/api/placeholder/800/600",
+  },
+  {
+    id: 2,
+    title: "Modern Downtown Loft",
+    location: "New York City, NY",
+    description:
+      "Stylish loft in the heart of Manhattan with city skyline views",
+    price: 299,
+    rating: 4.8,
+    reviews: 96,
+    beds: 2,
+    baths: 2,
+    guests: 4,
+    amenities: ["City View", "Gym", "WiFi", "Workspace"],
+    imagePath: "/api/placeholder/800/600",
+  },
+  {
+    id: 3,
+    title: "Mountain Retreat Cabin",
+    location: "Aspen, Colorado",
+    description:
+      "Cozy cabin surrounded by nature with spectacular mountain views",
+    price: 399,
+    rating: 4.95,
+    reviews: 84,
+    beds: 3,
+    baths: 2,
+    guests: 6,
+    amenities: ["Fireplace", "Hot Tub", "WiFi", "Parking"],
+    imagePath: "/api/placeholder/800/600",
+  },
+];
+
+const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("anywhere");
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-blue-900 to-black">
       <Navbar />
-      {/* Hero Section */}
-      <div className="relative bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
-          <div className="relative isolate overflow-hidden bg-gradient-to-b from-indigo-100/20 px-6 pt-16 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
-            <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                Find your perfect rental
-              </h1>
-              <p className="mt-6 text-lg leading-8 text-gray-600">
-                Discover amazing properties for your next stay, with instant
-                booking and verified hosts.
-              </p>
 
-              {/* Search Bar */}
-              <div className="mt-8 flex items-center justify-center gap-x-6 lg:justify-start">
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+      {/* Hero Section */}
+      <div className="relative">
+        <div className="px-6 py-24 mx-auto text-white max-w-7xl">
+          <div className="max-w-2xl mx-auto text-center">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
+              Find Your Dream Vacation Rental
+            </h1>
+            <p className="mt-6 text-xl text-gray-300">
+              Discover exceptional properties worldwide. From cozy apartments to
+              luxury villas, find the perfect place for your next adventure.
+            </p>
+
+            {/* Enhanced Search Bar */}
+            <div className="mt-10">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-center">
+                <div className="relative flex-1 max-w-md">
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <Search className="w-5 h-5 text-gray-400" />
                   </div>
                   <input
                     type="text"
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="block w-full py-3 pl-10 pr-3 text-white border border-blue-600 rounded-lg bg-blue-800/50 placeholder:text-gray-400 focus:border-blue-400 focus:outline-none sm:text-sm"
                     placeholder="Search locations..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
-                <button className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+
+                <select
+                  value={selectedLocation}
+                  onChange={(e) => setSelectedLocation(e.target.value)}
+                  className="block py-3 pl-3 pr-10 text-white border border-blue-600 rounded-lg bg-blue-800/50 focus:border-blue-400 focus:outline-none sm:text-sm"
+                >
+                  <option value="anywhere">Anywhere</option>
+                  <option value="united-states">United States</option>
+                  <option value="europe">Europe</option>
+                  <option value="asia">Asia</option>
+                </select>
+
+                <button className="px-6 py-3 text-sm font-semibold text-white transition-colors bg-blue-600 rounded-lg shadow-sm hover:bg-blue-500">
                   Search
                 </button>
               </div>
@@ -48,39 +137,96 @@ const Homepage = () => {
       </div>
 
       {/* Featured Properties */}
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl mb-8">
-          Featured Properties
-        </h2>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Property Cards */}
-          {[1, 2, 3].map((i) => (
+      <div className="px-6 py-16 mx-auto max-w-7xl lg:px-8">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            Featured Properties
+          </h2>
+          <Link
+            href="/coming-soon"
+            className="text-sm font-semibold text-blue-400 transition-colors hover:text-blue-300"
+          >
+            View all properties →
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {sampleProperties.map((property) => (
             <div
-              key={i}
-              className="group relative bg-white rounded-lg shadow-lg overflow-hidden"
+              key={property.id}
+              className="relative overflow-hidden transition-all border border-blue-600 shadow-lg group rounded-xl bg-blue-800/50 hover:shadow-xl"
             >
-              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-64">
+              <div className="overflow-hidden aspect-h-2 aspect-w-3">
                 <Image
-                  src="/your-image-path"
-                  alt="Your alt text"
-                  width={64}
-                  height={64}
-                  className="w-12 h-12 rounded-full"
+                  src={property.imagePath}
+                  alt={property.title}
+                  width={800}
+                  height={600}
+                  className="object-cover object-center w-full h-full transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Luxury Villa {i}
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  Beautiful location with amazing views
+
+              <div className="p-6">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-semibold text-white">
+                    {property.title}
+                  </h3>
+                  <div className="flex items-center">
+                    <Star className="w-4 h-4 text-yellow-400" />
+                    <span className="ml-1 text-sm text-gray-300">
+                      {property.rating} ({property.reviews})
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center mt-2 text-sm text-gray-300">
+                  <MapPin className="flex-shrink-0 w-4 h-4" />
+                  <span className="ml-1">{property.location}</span>
+                </div>
+
+                <p className="mt-3 text-sm text-gray-300 line-clamp-2">
+                  {property.description}
                 </p>
-                <div className="mt-2 flex items-center justify-between">
-                  <p className="text-lg font-medium text-gray-900">
-                    $299/night
-                  </p>
-                  <button className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                    View details
+
+                <div className="flex items-center gap-4 mt-4 text-sm text-gray-300">
+                  <div className="flex items-center">
+                    <Home className="w-4 h-4" />
+                    <span className="ml-1">{property.beds} beds</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Bath className="w-4 h-4" />
+                    <span className="ml-1">{property.baths} baths</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Users className="w-4 h-4" />
+                    <span className="ml-1">{property.guests} guests</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 mt-4">
+                  {property.amenities.map((amenity, index) => (
+                    <span
+                      key={index}
+                      className="inline-flex items-center px-2 py-1 text-xs font-medium text-blue-200 border border-blue-700 rounded-full bg-blue-900/50"
+                    >
+                      {amenity === "WiFi" && <Wifi className="w-3 h-3 mr-1" />}
+                      {amenity === "Kitchen" && (
+                        <Coffee className="w-3 h-3 mr-1" />
+                      )}
+                      {amenity}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex items-center justify-between mt-6">
+                  <div className="flex items-baseline text-white">
+                    <span className="text-2xl font-bold">
+                      ${property.price}
+                    </span>
+                    <span className="text-sm text-gray-300">/night</span>
+                  </div>
+                  <button className="px-4 py-2 text-sm font-semibold text-white transition-colors bg-blue-600 rounded-lg shadow-sm hover:bg-blue-500">
+                    Book now
                   </button>
                 </div>
               </div>
@@ -88,8 +234,11 @@ const Homepage = () => {
           ))}
         </div>
       </div>
+
+      <Testimonials />
+      <Footer />
     </div>
   );
 };
 
-export default Homepage;
+export default HomePage;
