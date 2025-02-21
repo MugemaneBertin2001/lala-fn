@@ -10,10 +10,9 @@ export const LoginPage = () => {
   const handleGoogleLogin = async () => {
     try {
       setIsLoading(true);
-      window.location.href = "/api/auth/google";
+      window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/google/login`;
     } catch (error) {
       console.error("Login failed:", error);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -30,14 +29,12 @@ export const LoginPage = () => {
           <span>Back to Home</span>
         </Link>
       </div>
-
       <div className="flex flex-1 flex-col items-center justify-center p-4">
         <div className="w-full max-w-md space-y-8 rounded-xl bg-blue-800/30 p-8 shadow-lg border border-blue-700">
           <div className="text-center">
             <h2 className="text-3xl font-bold">Welcome</h2>
             <p className="mt-2 text-gray-300">Sign in to continue</p>
           </div>
-
           <div className="pt-4">
             <button
               onClick={handleGoogleLogin}

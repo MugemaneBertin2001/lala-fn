@@ -229,9 +229,9 @@ const HomePage = () => {
                     </span>
                     <span className="text-sm text-gray-300">/night</span>
                   </div>
-                  <button className="px-4 py-2 text-sm font-semibold text-white transition-colors bg-blue-600 rounded-lg shadow-sm hover:bg-blue-500">
+                  <Link  href="/auth" className="px-4 py-2 text-sm font-semibold text-white transition-colors bg-blue-600 rounded-lg shadow-sm hover:bg-blue-500">
                     Book now
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
