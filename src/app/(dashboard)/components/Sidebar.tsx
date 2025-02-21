@@ -40,6 +40,7 @@ const SidebarLink = ({
 export function Sidebar({ className, title = "Rental Portal" }: SidebarProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const { user } = useAuth();
+
   // Base path depends on user role
   const basePath = user?.role === "ADMIN" ? "/admin" : "/renter";
 

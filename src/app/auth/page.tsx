@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface AuthUser {
@@ -21,32 +20,25 @@ interface AuthResponse {
   newUser: boolean;
 }
 
-export default function AuthHandler() {
+function AuthContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
     const handleAuthResponse = async () => {
       try {
-        // Get response data from URL params
-        const data = searchParams.get('data');
+        const data = searchParams.get("data");
         if (data) {
           const authData: AuthResponse = JSON.parse(decodeURIComponent(data));
-          
-          // Store auth data in localStorage
           localStorage.setItem("token", authData.token);
           localStorage.setItem("user", JSON.stringify(authData.user));
-          
-          // Optionally store additional data
           localStorage.setItem("role", authData.user.role);
-          
-          // If it's a new user, might want to redirect to a profile completion page
+
           if (authData.newUser) {
             router.push("/complete-profile");
             return;
           }
-          
-          // Otherwise redirect based on user role
+
           switch (authData.user.role) {
             case "RENTER":
               router.push("/renter/dashboard");
@@ -66,16 +58,30 @@ export default function AuthHandler() {
         router.push("/login?error=invalid_response");
       }
     };
-
     handleAuthResponse();
   }, [router, searchParams]);
 
   return (
+    <div className="text-center text-white">
+      <h2 className="text-2xl font-bold mb-4">Completing your sign in...</h2>
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
+    </div>
+  );
+}
+
+export default function AuthHandler() {
+  return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-900 to-black">
-      <div className="text-center text-white">
-        <h2 className="text-2xl font-bold mb-4">Completing your sign in...</h2>
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
-      </div>
+      <Suspense
+        fallback={
+          <div className="text-center text-white">
+            <h2 className="text-2xl font-bold mb-4">Loading...</h2>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
+          </div>
+        }
+      >
+        <AuthContent />
+      </Suspense>
     </div>
   );
 }
