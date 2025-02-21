@@ -1,6 +1,10 @@
 "use client";
+
 import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { isValidRole } from "@/lib/utils/auth";
+import { useToast } from "@/hooks/use-toast";
+
 
 interface AuthUser {
   id: number;
@@ -23,43 +27,78 @@ interface AuthResponse {
 function AuthContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { toast } = useToast();
 
   useEffect(() => {
     const handleAuthResponse = async () => {
       try {
         const data = searchParams.get("data");
-        if (data) {
-          const authData: AuthResponse = JSON.parse(decodeURIComponent(data));
-          localStorage.setItem("token", authData.token);
-          localStorage.setItem("user", JSON.stringify(authData.user));
-          localStorage.setItem("role", authData.user.role);
-
-          if (authData.newUser) {
-            router.push("/complete-profile");
-            return;
-          }
-
-          switch (authData.user.role) {
-            case "RENTER":
-              router.push("/renter/dashboard");
-              break;
-            case "HOST":
-              router.push("/host/dashboard");
-              break;
-            default:
-              router.push("/dashboard");
-          }
-        } else {
-          console.error("No auth data received");
+        if (!data) {
+          toast({
+            variant: "destructive",
+            title: "Authentication Error",
+            description: "No authentication data received. Please try signing in again.",
+          });
           router.push("/login?error=no_data");
+          return;
+        }
+
+        const authData: AuthResponse = JSON.parse(decodeURIComponent(data));
+
+        if (!authData.user.role || !isValidRole(authData.user.role)) {
+          toast({
+            title: "Complete Your Profile",
+            description: "Please select your role to continue.",
+          });
+          router.push("/complete-profile");
+          return;
+        }
+
+        // Only save data if role is valid
+        localStorage.setItem("token", authData.token);
+        localStorage.setItem("user", JSON.stringify(authData.user));
+        localStorage.setItem("role", authData.user.role);
+
+        // Handle new user case
+        if (authData.newUser) {
+          toast({
+            title: "Welcome!",
+            description: "Please complete your profile to get started.",
+          });
+          router.push("/complete-profile");
+          return;
+        }
+
+        // Show success toast
+        toast({
+          title: "Sign in successful",
+          description: `Welcome back, ${authData.user.firstName}!`,
+        });
+
+        // Route based on role
+        switch (authData.user.role) {
+          case "RENTER":
+            router.push("/renter/dashboard");
+            break;
+          case "HOST":
+            router.push("/host/dashboard");
+            break;
+          default:
+            router.push("/dashboard");
         }
       } catch (error) {
         console.error("Error processing auth response:", error);
+        toast({
+          variant: "destructive",
+          title: "Authentication Error",
+          description: "Failed to process authentication response. Please try again.",
+        });
         router.push("/login?error=invalid_response");
       }
     };
+
     handleAuthResponse();
-  }, [router, searchParams]);
+  }, [router, searchParams, toast]);
 
   return (
     <div className="text-center text-white">
