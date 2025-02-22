@@ -2,9 +2,7 @@
 
 import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { isValidRole } from "@/lib/utils/auth";
 import { useToast } from "@/hooks/use-toast";
-
 
 interface AuthUser {
   id: number;
@@ -15,13 +13,14 @@ interface AuthUser {
   googleId: string;
   pictureUrl: string;
   authorities: Array<{ authority: string }>;
+  isNewUser: boolean;
 }
 
 interface AuthResponse {
   token: string;
   message: string;
   user: AuthUser;
-  newUser: boolean;
+  isNewUser: boolean;
 }
 
 function AuthContent() {
@@ -37,7 +36,8 @@ function AuthContent() {
           toast({
             variant: "destructive",
             title: "Authentication Error",
-            description: "No authentication data received. Please try signing in again.",
+            description:
+              "No authentication data received. Please try signing in again.",
           });
           router.push("/login?error=no_data");
           return;
@@ -45,11 +45,12 @@ function AuthContent() {
 
         const authData: AuthResponse = JSON.parse(decodeURIComponent(data));
 
-        if (!authData.user.role || !isValidRole(authData.user.role)) {
+        if (authData.user.isNewUser) {
           toast({
             title: "Complete Your Profile",
             description: "Please select your role to continue.",
           });
+          localStorage.setItem("registrationEmail", authData.user.email);
           router.push("/complete-profile");
           return;
         }
@@ -60,7 +61,7 @@ function AuthContent() {
         localStorage.setItem("role", authData.user.role);
 
         // Handle new user case
-        if (authData.newUser) {
+        if (authData.isNewUser) {
           toast({
             title: "Welcome!",
             description: "Please complete your profile to get started.",
@@ -91,7 +92,8 @@ function AuthContent() {
         toast({
           variant: "destructive",
           title: "Authentication Error",
-          description: "Failed to process authentication response. Please try again.",
+          description:
+            "Failed to process authentication response. Please try again.",
         });
         router.push("/login?error=invalid_response");
       }

@@ -42,7 +42,7 @@ export function Sidebar({ className, title = "Rental Portal" }: SidebarProps) {
   const { user } = useAuth();
 
   // Base path depends on user role
-  const basePath = user?.role === "ADMIN" ? "/admin" : "/renter";
+  const basePath = user?.role === "HOST" ? "/host" : "/renter";
 
   const sidebarContent = (
     <div className="flex min-h-screen flex-col gap-4">

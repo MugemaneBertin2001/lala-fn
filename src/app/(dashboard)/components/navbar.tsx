@@ -17,7 +17,6 @@ interface NavbarProps {
 }
 
 export function DashboardNavbar({
-  title = "Rental Portal",
 }: Readonly<NavbarProps>) {
   const { user, logout } = useAuth();
 
