@@ -13,6 +13,7 @@ export const RenterProperties = () => {
           View your current rental property details
         </p>
       </div>
+      {/* @ts-ignore */}
       <PropertyCard property={currentProperty} />
     </div>
   );

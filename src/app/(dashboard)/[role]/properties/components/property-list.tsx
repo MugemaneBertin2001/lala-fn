@@ -14,13 +14,17 @@ export const PropertyList = ({ properties }:any) => (
             <PropertyStatusBadge status={property.status} />
           </div>
           <CardDescription className="flex items-center gap-2">
-            <MapPin className="h-4 w-4" />
+            <MapPin className="w-4 h-4" />
             {property.address}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <PropertyDetails property={property} />
+            <PropertyDetails property={property} onDelete={function (): void {
+              throw new Error("Function not implemented.");
+            } } onEdit={function (): void {
+              throw new Error("Function not implemented.");
+            } } />
             <div className="pt-4">
               <Button variant="outline" className="w-full">
                 View Details
